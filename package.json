@@ -1,0 +1,22 @@
+{
+  "name": "leafletgraticule",
+  "version": "1.0.0",
+  "description": "Draws graticules on leaflet maps (forked to change export)",
+  "main": "Leaflet.Graticule.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexchang0229/LeafletGraticule.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexchang0229/LeafletGraticule/issues"
+  },
+  "homepage": "https://github.com/alexchang0229/LeafletGraticule#readme"
+}
