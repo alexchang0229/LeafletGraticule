@@ -3,6 +3,7 @@
 *  and show the axis tick label on the edge of the map.
 *  Author: lanwei@cloudybay.com.tw
 */
+import L from 'leaflet';
 
 L.LatLngGraticule = L.Layer.extend({
     options: {
@@ -14,11 +15,11 @@ L.LatLngGraticule = L.Layer.extend({
         lngLineCurved: 0,
         latLineCurved: 0,
         zoomInterval: [
-            {start: 2, end: 2, interval: 40},
-            {start: 3, end: 3, interval: 20},
-            {start: 4, end: 4, interval: 10},
-            {start: 5, end: 7, interval: 5},
-            {start: 8, end: 20, interval: 1}
+            { start: 2, end: 2, interval: 40 },
+            { start: 3, end: 3, interval: 20 },
+            { start: 4, end: 4, interval: 10 },
+            { start: 5, end: 7, interval: 5 },
+            { start: 8, end: 20, interval: 1 }
         ]
     },
 
@@ -70,9 +71,9 @@ L.LatLngGraticule = L.Layer.extend({
         map.on('move', this._reset, this);
         map.on('moveend', this._reset, this);
 
-// 		if (map.options.zoomAnimation && L.Browser.any3d) {
-// 			map.on('zoom', this._animateZoom, this);
-// 		}
+        // 		if (map.options.zoomAnimation && L.Browser.any3d) {
+        // 			map.on('zoom', this._animateZoom, this);
+        // 		}
 
         this._reset();
     },
@@ -84,9 +85,9 @@ L.LatLngGraticule = L.Layer.extend({
         map.off('move', this._reset, this);
         map.off('moveend', this._reset, this);
 
-// 		if (map.options.zoomAnimation) {
-// 			map.off('zoom', this._animateZoom, this);
-// 		}
+        // 		if (map.options.zoomAnimation) {
+        // 			map.off('zoom', this._animateZoom, this);
+        // 		}
     },
 
     addTo: function (map) {
@@ -141,22 +142,22 @@ L.LatLngGraticule = L.Layer.extend({
         });
     },
 
-// 	_animateZoom: function (e) {
-// 		var map = this._map,
-// 			container = this._container,
-// 			canvas = this._canvas,
-// 			zoom = map.getZoom(),
-// 			center = map.getCenter(),
-// 			scale = map.getZoomScale(zoom),
-// 			nw = map.containerPointToLatLng([0, 0]),
-// 			se = map.containerPointToLatLng([canvas.width, canvas.height]),
-//
-// 			topLeft = map._latLngToNewLayerPoint(nw, zoom, center),
-// 			size = map._latLngToNewLayerPoint(se, zoom, center)._subtract(topLeft),
-// 			origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
-//
-// 		L.DomUtil.setTransform(container, origin, scale);
-// 	},
+    // 	_animateZoom: function (e) {
+    // 		var map = this._map,
+    // 			container = this._container,
+    // 			canvas = this._canvas,
+    // 			zoom = map.getZoom(),
+    // 			center = map.getCenter(),
+    // 			scale = map.getZoomScale(zoom),
+    // 			nw = map.containerPointToLatLng([0, 0]),
+    // 			se = map.containerPointToLatLng([canvas.width, canvas.height]),
+    //
+    // 			topLeft = map._latLngToNewLayerPoint(nw, zoom, center),
+    // 			size = map._latLngToNewLayerPoint(se, zoom, center)._subtract(topLeft),
+    // 			origin = topLeft._add(size._multiplyBy((1 / 2) * (1 - 1 / scale)));
+    //
+    // 		L.DomUtil.setTransform(container, origin, scale);
+    // 	},
 
     _reset: function () {
         var container = this._container,
@@ -169,9 +170,9 @@ L.LatLngGraticule = L.Layer.extend({
         container.style.width = size.x + 'px';
         container.style.height = size.y + 'px';
 
-        canvas.width  = size.x;
+        canvas.width = size.x;
         canvas.height = size.y;
-        canvas.style.width  = size.x + 'px';
+        canvas.style.width = size.x + 'px';
         canvas.style.height = size.y + 'px';
 
         this.__calcInterval();
@@ -187,14 +188,14 @@ L.LatLngGraticule = L.Layer.extend({
         L.DomUtil.setOpacity(this._canvas, this.options.opacity);
     },
 
-    __format_lat: function(lat) {
+    __format_lat: function (lat) {
         if (this.options.latFormatTickLabel) {
             return this.options.latFormatTickLabel(lat);
         }
 
         // todo: format type of float
         if (lat < 0) {
-            return '' + (lat*-1) + 'S';
+            return '' + (lat * -1) + 'S';
         }
         else if (lat > 0) {
             return '' + lat + 'N';
@@ -202,7 +203,7 @@ L.LatLngGraticule = L.Layer.extend({
         return '' + lat;
     },
 
-    __format_lng: function(lng) {
+    __format_lng: function (lng) {
         if (this.options.lngFormatTickLabel) {
             return this.options.lngFormatTickLabel(lng);
         }
@@ -215,10 +216,10 @@ L.LatLngGraticule = L.Layer.extend({
             return '' + lng + 'E';
         }
         else if (lng < 0 && lng > -180) {
-            return '' + (lng*-1) + 'W';
+            return '' + (lng * -1) + 'W';
         }
         else if (lng == -180) {
-            return '' + (lng*-1);
+            return '' + (lng * -1);
         }
         else if (lng < -180) {
             return '' + (360 + lng) + 'W';
@@ -226,7 +227,7 @@ L.LatLngGraticule = L.Layer.extend({
         return '' + lng;
     },
 
-    __calcInterval: function() {
+    __calcInterval: function () {
         var zoom = this._map.getZoom();
         if (this._currZoom != zoom) {
             this._currLngInterval = 0;
@@ -248,7 +249,7 @@ L.LatLngGraticule = L.Layer.extend({
                     }
                 }
             }
-            catch(e) {
+            catch (e) {
                 this._currLngInterval = 0;
             }
         }
@@ -265,23 +266,23 @@ L.LatLngGraticule = L.Layer.extend({
                     }
                 }
             }
-            catch(e) {
+            catch (e) {
                 this._currLatInterval = 0;
             }
         }
     },
 
-    __draw: function(label) {
+    __draw: function (label) {
         function _parse_px_to_int(txt) {
             if (txt.length > 2) {
-                if (txt.charAt(txt.length-2) == 'p') {
-                    txt = txt.substr(0, txt.length-2);
+                if (txt.charAt(txt.length - 2) == 'p') {
+                    txt = txt.substr(0, txt.length - 2);
                 }
             }
             try {
                 return parseInt(txt, 10);
             }
-            catch(e) {}
+            catch (e) { }
             return 0;
         };
 
@@ -313,7 +314,7 @@ L.LatLngGraticule = L.Layer.extend({
                 var _font_size = ctx.font.split(' ')[0];
                 txtHeight = _parse_px_to_int(_font_size);
             }
-            catch(e) {}
+            catch (e) { }
 
             var ww = canvas.width,
                 hh = canvas.height;
@@ -358,7 +359,7 @@ L.LatLngGraticule = L.Layer.extend({
                 txtWidth = ctx.measureText(latstr).width;
 
                 if (curvedLat) {
-                    if (typeof(curvedLat) == 'number') {
+                    if (typeof (curvedLat) == 'number') {
                         _lon_delta = curvedLat;
                     }
 
@@ -380,7 +381,7 @@ L.LatLngGraticule = L.Layer.extend({
                     ctx.beginPath();
                     ctx.moveTo(ll.x, ll.y);
                     var _prev_p = null;
-                    for (var j=__lon_left; j<=__lon_right; j+=_lon_delta) {
+                    for (var j = __lon_left; j <= __lon_right; j += _lon_delta) {
                         rr = map.latLngToContainerPoint(L.latLng(lat_tick, j));
                         ctx.lineTo(rr.x, rr.y);
 
@@ -388,16 +389,16 @@ L.LatLngGraticule = L.Layer.extend({
                             if (_prev_p.x < 0 && rr.x >= 0) {
                                 var _s = (rr.x - 0) / (rr.x - _prev_p.x);
                                 var _y = rr.y - ((rr.y - _prev_p.y) * _s);
-                                ctx.fillText(latstr, 0, _y + (txtHeight/2));
+                                ctx.fillText(latstr, 0, _y + (txtHeight / 2));
                             }
-                            else if (_prev_p.x <= (ww-txtWidth) && rr.x > (ww-txtWidth)) {
+                            else if (_prev_p.x <= (ww - txtWidth) && rr.x > (ww - txtWidth)) {
                                 var _s = (rr.x - ww) / (rr.x - _prev_p.x);
                                 var _y = rr.y - ((rr.y - _prev_p.y) * _s);
-                                ctx.fillText(latstr, ww-txtWidth, _y + (txtHeight/2)-2);
+                                ctx.fillText(latstr, ww - txtWidth, _y + (txtHeight / 2) - 2);
                             }
                         }
 
-                        _prev_p = {x:rr.x, y:rr.y, lon:j, lat:i};
+                        _prev_p = { x: rr.x, y: rr.y, lon: j, lat: i };
                     }
                     ctx.stroke();
                 }
@@ -415,24 +416,24 @@ L.LatLngGraticule = L.Layer.extend({
                     }
 
                     ctx.beginPath();
-                    ctx.moveTo(ll.x+1, ll.y);
-                    ctx.lineTo(rr.x-1, rr.y);
+                    ctx.moveTo(ll.x + 1, ll.y);
+                    ctx.lineTo(rr.x - 1, rr.y);
                     ctx.stroke();
                     if (self.options.showLabel && label) {
-                        var _yy = ll.y + (txtHeight/2)-2;
+                        var _yy = ll.y + (txtHeight / 2) - 2;
                         ctx.fillText(latstr, 0, _yy);
-                        ctx.fillText(latstr, ww-txtWidth, _yy);
+                        ctx.fillText(latstr, ww - txtWidth, _yy);
                     }
                 }
             };
 
             if (latInterval > 0) {
-                for (var i=latInterval; i<=_lat_t; i+=latInterval) {
+                for (var i = latInterval; i <= _lat_t; i += latInterval) {
                     if (i >= _lat_b) {
                         __draw_lat_line(this, i);
                     }
                 }
-                for (var i=0; i>=_lat_b; i-=latInterval) {
+                for (var i = 0; i >= _lat_b; i -= latInterval) {
                     if (i <= _lat_t) {
                         __draw_lat_line(this, i);
                     }
@@ -445,27 +446,27 @@ L.LatLngGraticule = L.Layer.extend({
                 var bb = map.latLngToContainerPoint(L.latLng(_lat_b, lon_tick));
 
                 if (curvedLon) {
-                    if (typeof(curvedLon) == 'number') {
+                    if (typeof (curvedLon) == 'number') {
                         _lat_delta = curvedLon;
                     }
 
                     ctx.beginPath();
                     ctx.moveTo(bb.x, bb.y);
                     var _prev_p = null;
-                    for (var j=_lat_b; j<_lat_t; j+=_lat_delta) {
+                    for (var j = _lat_b; j < _lat_t; j += _lat_delta) {
                         var tt = map.latLngToContainerPoint(L.latLng(j, lon_tick));
                         ctx.lineTo(tt.x, tt.y);
 
                         if (self.options.showLabel && label && _prev_p != null) {
                             if (_prev_p.y > 8 && tt.y <= 8) {
-                                ctx.fillText(lngstr, tt.x - (txtWidth/2), txtHeight);
+                                ctx.fillText(lngstr, tt.x - (txtWidth / 2), txtHeight);
                             }
                             else if (_prev_p.y >= hh && tt.y < hh) {
-                                ctx.fillText(lngstr, tt.x - (txtWidth/2), hh-2);
+                                ctx.fillText(lngstr, tt.x - (txtWidth / 2), hh - 2);
                             }
                         }
 
-                        _prev_p = {x:tt.x, y:tt.y, lon:lon_tick, lat:j};
+                        _prev_p = { x: tt.x, y: tt.y, lon: lon_tick, lat: j };
                     }
                     ctx.stroke();
                 }
@@ -485,24 +486,24 @@ L.LatLngGraticule = L.Layer.extend({
                     }
 
                     ctx.beginPath();
-                    ctx.moveTo(tt.x, tt.y+1);
-                    ctx.lineTo(bb.x, bb.y-1);
+                    ctx.moveTo(tt.x, tt.y + 1);
+                    ctx.lineTo(bb.x, bb.y - 1);
                     ctx.stroke();
 
                     if (self.options.showLabel && label) {
-                        ctx.fillText(lngstr, tt.x - (txtWidth/2), txtHeight+1);
-                        ctx.fillText(lngstr, bb.x - (txtWidth/2), hh-3);
+                        ctx.fillText(lngstr, tt.x - (txtWidth / 2), txtHeight + 1);
+                        ctx.fillText(lngstr, bb.x - (txtWidth / 2), hh - 3);
                     }
                 }
             };
 
             if (lngInterval > 0) {
-                for (var i=lngInterval; i<=_lon_r; i+=lngInterval) {
+                for (var i = lngInterval; i <= _lon_r; i += lngInterval) {
                     if (i >= _lon_l) {
                         __draw_lon_line(this, i);
                     }
                 }
-                for (var i=0; i>=_lon_l; i-=lngInterval) {
+                for (var i = 0; i >= _lon_l; i -= lngInterval) {
                     if (i <= _lon_r) {
                         __draw_lon_line(this, i);
                     }
@@ -513,6 +514,6 @@ L.LatLngGraticule = L.Layer.extend({
 
 });
 
-L.latlngGraticule = function (options) {
+export default function LeafletGraticule(options) {
     return new L.LatLngGraticule(options);
 };
